@@ -27,9 +27,9 @@ export class AuthService {
           hash,
         },
       });
-      delete user.hash;
+      // delete user.hash;
       // return the saved user
-      return user;
+      return this.signToken(user.id, user.email);
     } catch (error) {
       // Handle unique constraint violation error
       if (error instanceof PrismaClientKnownRequestError) {
@@ -68,14 +68,14 @@ export class AuthService {
     );
     console.log(user.email);
     // send back the user 
-    delete user.hash;
+    // delete user.hash;
 
     // return user;
     return this.signToken(user.id, user.email);
 
     // return { msg: 'signin', status: 'success' };
   }
-  async signToken(userId: number, email: string): Promise<string>{
+  signToken(userId: number, email: string): Promise<string>{
     const payload = {
       sub: userId,
       email,
